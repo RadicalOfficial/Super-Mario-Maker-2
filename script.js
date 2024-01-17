@@ -5,6 +5,7 @@
   let userdata;
   let status;
   let userstatus;
+  let usermii;
 
   if (!Scratch.extensions.unsandboxed) {
     throw new Error('Sandbox Error: This must be unsandboxed. Thank you! - Radical');
@@ -71,6 +72,23 @@
                 menu: "USER_MENU"
               }
             }
+          },
+          {
+            opcode: 'getlevelimage',
+            blockType: Scratch.BlockType.COMMAND,
+            text: 'get Level Image [LEVEL]',
+            arguments: {
+              LEVEL: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: '91CMPM7LF',
+              }
+            }
+          },
+          {
+            opcode: 'getmiiimage',
+            blockType: Scratch.BlockType.COMMAND,
+            text: 'get Mii Image',
+            hideFromPalette: true,
           }
         ],
         menus: {
@@ -158,6 +176,9 @@
         case "last active":
           return userdata.last_active_pretty;
         case "mii image":
+          {
+            usermii = userdata.mii_image;
+          }
           return userdata.mii_image;
         case "pose name":
           return userdata.pose_name;
@@ -216,6 +237,43 @@
         case "super world clears":
           return userdata.unique_super_world_clears;
       }
+    }
+    getlevelimage({ LEVEL }) {
+      console.log("Custom Extension Message: This code is provided by ShovelUtils, I do not own any of this but full credits to TheShovel")
+        Scratch.fetch(`https://tgrcode.com/mm2/level_thumbnail/${LEVEL}`)
+      .then((r) => r.arrayBuffer())
+      .then((arrayBuffer) => {
+        const store = vm.runtime.storage;
+        vm.addCostume(LEVEL + ".PNG", {
+          name: LEVEL + "",
+          asset: new store.Asset(
+            store.AssetType.ImageBitmap,
+            null,
+            store.DataFormat.PNG,
+            new Uint8Array(arrayBuffer),
+            true
+          )
+        })
+      })
+    }
+    getmiiimage() {
+      // Does not appear yet
+      console.log(usermii)
+      Scratch.fetch('https://corsproxy.io/?', usermii)
+      .then((r) => r.arrayBuffer())
+      .then((arrayBuffer) => {
+        const store = vm.runtime.storage;
+        vm.addCostume("miidata" + ".PNG", {
+          name: "miidata" + "",
+          asset: new store.Asset(
+            store.AssetType.ImageBitmap,
+            null,
+            store.DataFormat.PNG,
+            new Uint8Array(arrayBuffer),
+            true
+          )
+        })
+      })
     }
   }
   Scratch.extensions.register(new SMM());
