@@ -6,6 +6,7 @@
   let status;
   let userstatus;
   let usermii;
+  let clearcon;
 
   if (!Scratch.extensions.unsandboxed) {
     throw new Error('Sandbox Error: This must be unsandboxed. Thank you! - Radical');
@@ -32,6 +33,11 @@
             opcode: 'getstatus',
             blockType: Scratch.BlockType.BOOLEAN,
             text: 'Level Status Code is Successful?',
+          },
+          {
+            opcode: 'clearcon',
+            blockType: Scratch.BlockType.BOOLEAN,
+            text: 'Level has Clear Condition?'
           },
           {
             opcode: 'getdatas',
@@ -94,7 +100,7 @@
         menus: {
           DATA_MENU: {
             acceptReporters: true,
-            items: ['title', 'description', 'author', 'courseid', 'uploaded', 'gamestyle', 'theme', 'difficulty', 'tags', 'comments', 'likes', 'clearrate', 'image', 'worldrecord']
+            items: ['title', 'description', 'author', 'courseid', 'uploaded', 'gamestyle', 'theme', 'difficulty', 'tags', 'comments', 'likes', 'clearrate', 'image', 'worldrecord', 'clear condition']
           },
           USER_MENU: {
             acceptReporters: true,
@@ -108,6 +114,11 @@
       leveldata = await response.json();
       if (!leveldata.error) {
         status = true;
+        if (!leveldata.clear_condition) {
+          clearcon = false;
+        } else {
+          clearcon = true;
+        }
       } else {
         status = false;
       }
@@ -147,7 +158,15 @@
         case "image":
           return `https://tgrcode.com/mm2/level_thumbnail/${leveldata.course_id}`;
         case "worldrecord":
+          if (!leveldata.world_record_pretty) {
+            return "Uncleared - No World Record"
+          }
           return `${leveldata.world_record_pretty} - ${leveldata.record_holder.name}`;
+        case "clear condition":
+          if (!leveldata.clear_condition) {
+            return "No clear condition for this Level."
+          }
+          return leveldata.clear_condition_name;
       }
     }
     async getuser(args) {
@@ -257,7 +276,6 @@
       })
     }
     getmiiimage() {
-      // Does not appear yet
       console.log(usermii)
       Scratch.fetch('https://corsproxy.io/?', usermii)
       .then((r) => r.arrayBuffer())
@@ -274,6 +292,9 @@
           )
         })
       })
+    }
+    clearcon() {
+      return clearcon
     }
   }
   Scratch.extensions.register(new SMM());
