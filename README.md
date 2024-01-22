@@ -34,7 +34,7 @@ The block above will make a new Scratch Costume of the level thumbnail.
 # Upcoming Updates
 ## These are the upcoming updaets for the Extension.
 ### Version 1.4
-Getting First Clears, World Records, from a user.
+Getting First Clears, World Records, from a user.<br>
 *Note that only the counts will be accurate, level data from the list will be too large.*
 
 
