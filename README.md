@@ -20,7 +20,15 @@ Then you can use these blocks:
 <br>
 
 > [!TIP]
-> The same goes for the User ID blocks but you have a wide selection of options
+> The same goes for the User ID blocks, and Ninji Speedruns but you have a wide selection of options
+
+# Miscellaneous Blocks
+These are blocks that can be used for other things besides getting data!
+
+```javascript
+get Level Thumbnail (level ID)
+```
+The block above will make a new Scratch Costume of the level thumbnail.
 
 # That's it!
 If you ever find any bugs, please contact me on [Scratch](https://scratch.mit.edu/users/Knightbot63/) or on the official forum topic.
