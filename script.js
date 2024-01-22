@@ -7,6 +7,8 @@
   let userstatus;
   let usermii;
   let clearcon;
+  let ninjidata;
+  let ninjistatus;
 
   if (!Scratch.extensions.unsandboxed) {
     throw new Error('Sandbox Error: This must be unsandboxed. Thank you! - Radical');
@@ -18,6 +20,10 @@
         name: 'Super Mario Maker 2',
         color1: "#af0000",
         blocks: [
+          {
+            blockType: "label",
+            text: "Level Data"
+          },
           {
             opcode: 'getlevel',
             blockType: Scratch.BlockType.COMMAND,
@@ -52,6 +58,10 @@
             }
           },
           {
+            blockType: "label",
+            text: "User Data"
+          },
+          {
             opcode: 'getuser',
             blockType: Scratch.BlockType.COMMAND,
             text: 'get Super Mario Maker 2 user [USEB]',
@@ -80,6 +90,10 @@
             }
           },
           {
+            blockType: "label",
+            text: "Level Image Render"
+          },
+          {
             opcode: 'getlevelimage',
             blockType: Scratch.BlockType.COMMAND,
             text: 'get Level Image [LEVEL]',
@@ -95,6 +109,36 @@
             blockType: Scratch.BlockType.COMMAND,
             text: 'get Mii Image',
             hideFromPalette: true,
+          },
+          {
+            blockType: "label",
+            text: "Ninji Speedrun Data"
+          },
+          {
+            opcode: 'getlatestninjis',
+            blockType: Scratch.BlockType.COMMAND,
+            text: 'get Latest Ninji Speedruns'
+          },
+          {
+            opcode: 'ninjistatus',
+            blockType: Scratch.BlockType.BOOLEAN,
+            text: 'Ninji Speedrun Status Code is Successful?'
+          },
+          {
+            opcode: 'ninjidex',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'get Ninji Speedrun by index [COURSE]\'s [INFO]',
+            arguments: {
+              COURSE: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 1,
+              },
+              INFO: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'name',
+                menu: "NINJI_MENU"
+              }
+            }
           }
         ],
         menus: {
@@ -105,6 +149,10 @@
           USER_MENU: {
             acceptReporters: true,
             items: ['region', 'country', 'name', 'last active', 'mii image', 'pose name', 'hat name', 'shirt name', 'pants name', 'courses played', 'courses cleared', 'courses attempted', 'courses deaths', 'likes', 'maker points', 'endless easy highscore', 'endless normal highscore', 'endless expert highscore', 'endless super expert highscore', 'versus rating', 'versus rank', 'versus won', 'versus lost', 'co-op clears', 'co-op plays', 'first clears', 'world records', 'super world clears', 'uploaded levels', 'tags enabled', 'comments enabled', 'employee']
+          },
+          NINJI_MENU: {
+            acceptReporters: true,
+            items: ["name", "description", "upload date", "game style", "theme", "end date", "clear condition"]
           }
         }
       };
@@ -295,6 +343,46 @@
     }
     clearcon() {
       return clearcon
+    }
+    async getlatestninjis() {
+      const response = await Scratch.fetch("https://tgrcode.com/mm2/ninji_info");
+      ninjidata = await response.json();
+      if (!ninjidata.error) {
+        ninjistatus = true;
+      } else {
+        ninjistatus = false;
+      }
+    }
+    ninjistatus() {
+      return ninjistatus
+    }
+    ninjidex({ COURSE, INFO }) {
+      if (COURSE > 21) {
+        return "Length must be under 21"
+      }
+      if (COURSE < 1) {
+        return "Length must be over 0"
+      }
+      switch (INFO) {
+        case "name":
+          return ninjidata.courses[COURSE - 1].name;
+        case "description":
+          return ninjidata.courses[COURSE - 1].description;
+        case "upload date":
+          return ninjidata.courses[COURSE - 1].uploaded;
+        case "game style":
+          return ninjidata.courses[COURSE - 1].game_style_name;
+        case "theme":
+          return ninjidata.courses[COURSE - 1].theme_name;
+        case "end date":
+          return ninjidata.courses[COURSE - 1].end_time;
+        case "clear condition":
+          if (ninjidata.courses[COURSE - 1].clear_condition === 0) {
+            return false
+          } else {
+            return true
+          }
+      }
     }
   }
   Scratch.extensions.register(new SMM());
