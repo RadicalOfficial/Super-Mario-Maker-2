@@ -25,10 +25,18 @@ Then you can use these blocks:
 # Miscellaneous Blocks
 These are blocks that can be used for other things besides getting data!
 
+
 ```javascript
 get Level Thumbnail (level ID)
 ```
 The block above will make a new Scratch Costume of the level thumbnail.
+
+# Upcoming Updates
+## These are the upcoming updaets for the Extension.
+### Version 1.4
+Getting First Clears, World Records, from a user.
+*Note that only the counts will be accurate, level data from the list will be too large.*
+
 
 # That's it!
 If you ever find any bugs, please contact me on [Scratch](https://scratch.mit.edu/users/Knightbot63/) or on the official forum topic.
