@@ -1,14 +1,21 @@
+// Name: Super Mario Maker 2
+// ID: smm
+// Description: Custom Extension for Super Mario Maker 2 APIs.
+// By: Knightbot63 <https://scratch.mit.edu/users/Knightbot63>
+// Original: Knightbot63
+
 (function(Scratch) {
   'use strict';
   const vm = Scratch.vm;
   let leveldata;
   let userdata;
-  let status;
-  let userstatus;
+  let status = false;
+  let userstatus = false;
   let usermii;
-  let clearcon;
+  let clearcon = false;
   let ninjidata;
-  let ninjistatus;
+  let ninjistatus = false;
+  let uncleared = false;
 
   if (!Scratch.extensions.unsandboxed) {
     throw new Error('Sandbox Error: This must be unsandboxed. Thank you! - Radical');
@@ -44,6 +51,24 @@
             opcode: 'clearcon',
             blockType: Scratch.BlockType.BOOLEAN,
             text: 'Level has Clear Condition?'
+          },
+          {
+            opcode: 'uncleared',
+            blockType: Scratch.BlockType.BOOLEAN,
+            text: 'Level is Uncleared?'
+          },
+          {
+            opcode: 'arguhatlevel',
+            blockType: Scratch.BlockType.EVENT,
+            text: "when [CODE]",
+            isEdgeActivated: false,
+            hideFromPalette: true,
+            arguments: {
+              CODE: {
+                type: Scratch.ArgumentType.STRING,
+                menu: "CODE"
+              }
+            }
           },
           {
             opcode: 'getdatas',
@@ -153,6 +178,17 @@
           NINJI_MENU: {
             acceptReporters: true,
             items: ["name", "description", "upload date", "game style", "theme", "end date", "clear condition"]
+          },
+          CODE: {
+            acceptReporters: false,
+            items: [
+              {
+                text: "Level has Clear Condition?",
+                value: " "
+              },
+              "Level Status Code is Successful?",
+              "Level is Uncleared?"
+            ]
           }
         }
       };
@@ -166,6 +202,11 @@
           clearcon = false;
         } else {
           clearcon = true;
+        }
+        if (!leveldata.world_record) {
+          uncleared = true;
+        } else {
+          uncleared = false;
         }
       } else {
         status = false;
@@ -384,6 +425,22 @@
           }
       }
     }
+    arguhatlevel(args) {
+      if (args.CODE == "Level has Clear Condition?") {
+        return true === Scratch.Cast.toReporter(clearcon)
+      } else if (args.CODE == "Level Status Code is Successful?") {
+        return true === Scratch.Cast.toReporter(status)
+      } else {
+        return true === Scratch.Cast.toReporter(uncleared)
+      }
+    }
+    uncleared() {
+      return uncleared
+    }
   }
+  Scratch.vm.runtime.on('BEFORE_EXECUTE', () => {
+    // startHats is the same as before!
+    Scratch.vm.runtime.startHats('smm_arguhatlevel');
+  });
   Scratch.extensions.register(new SMM());
 })(Scratch);
