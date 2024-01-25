@@ -26,6 +26,7 @@
         id: 'smm',
         name: 'Super Mario Maker 2',
         color1: "#af0000",
+        docsURI: 'https://github.com/RadicalOfficial/Super-Mario-Maker-2/blob/main/README.md',
         blocks: [
           {
             blockType: "label",
