@@ -1,8 +1,7 @@
 // Name: Super Mario Maker 2
 // ID: smm
 // Description: Custom Extension for Super Mario Maker 2 APIs.
-// By: Knightbot63 <https://scratch.mit.edu/users/Knightbot63>
-// Original: Knightbot63
+// By: RadicalOfficial <https://scratch.mit.edu/users/Knightbot63>
 
 (function(Scratch) {
   'use strict';
@@ -16,7 +15,12 @@
   let ninjidata;
   let ninjistatus = false;
   let uncleared = false;
+  let superworlddata;
+  let superworldstatus = false;
+  let endlessdata;
+  let endlessstatus = false;
 
+  var experimental = false;
   if (!Scratch.extensions.unsandboxed) {
     throw new Error('Sandbox Error: This must be unsandboxed. Thank you! - Radical');
   }
@@ -26,7 +30,6 @@
         id: 'smm',
         name: 'Super Mario Maker 2',
         color1: "#af0000",
-        docsURI: 'https://github.com/RadicalOfficial/Super-Mario-Maker-2/blob/main/README.md',
         blocks: [
           {
             blockType: "label",
@@ -58,19 +61,7 @@
             blockType: Scratch.BlockType.BOOLEAN,
             text: 'Level is Uncleared?'
           },
-          {
-            opcode: 'arguhatlevel',
-            blockType: Scratch.BlockType.EVENT,
-            text: "when [CODE]",
-            isEdgeActivated: false,
-            hideFromPalette: true,
-            arguments: {
-              CODE: {
-                type: Scratch.ArgumentType.STRING,
-                menu: "CODE"
-              }
-            }
-          },
+
           {
             opcode: 'getdatas',
             blockType: Scratch.BlockType.REPORTER,
@@ -165,7 +156,73 @@
                 menu: "NINJI_MENU"
               }
             }
-          }
+          },
+
+          "---",
+          {
+            blockType: "label",
+            text: "Beta Blocks"
+          },
+          {
+            opcode: "superworlds",
+            blockType: Scratch.BlockType.COMMAND,
+            text: "get Super Worlds",
+            hideFromPalette: !experimental
+          },
+          {
+            opcode: "getsuper",
+            blockType: Scratch.BlockType.COMMAND,
+            text: "get Super World by id [ID]",
+            arguments: {
+              ID: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: "Maker ID"
+              }
+            },
+            hideFromPalette: !experimental
+          },
+          {
+            opcode: "endlesscourses",
+            blockType: Scratch.BlockType.COMMAND,
+            text: "get [NUMB] Endless [DIFFS] courses",
+            hideFromPalette: !experimental,
+            arguments: {
+              NUMB: {
+                type: Scratch.ArgumentType.NUMBER,
+                defaultValue: 1
+              },
+              DIFFS: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: "Easy",
+                menu: "DIFF_MENU"
+              }
+            }
+          },
+          {
+            opcode: 'arguhatlevel',
+            blockType: Scratch.BlockType.EVENT,
+            text: "when [CODE]",
+            isEdgeActivated: false,
+            hideFromPalette: !experimental,
+            arguments: {
+              CODE: {
+                type: Scratch.ArgumentType.STRING,
+                menu: "CODE"
+              }
+            }
+          },
+          {
+            func: "experimental",
+            blockType: Scratch.BlockType.BUTTON,
+            text: "Beta Blocks",
+            hideFromPalette: experimental
+          },
+          {
+            func: "closeEx",
+            blockType: Scratch.BlockType.BUTTON,
+            text: "Close Beta Blocks",
+            hideFromPalette: !experimental
+          },
         ],
         menus: {
           DATA_MENU: {
@@ -190,6 +247,10 @@
               "Level Status Code is Successful?",
               "Level is Uncleared?"
             ]
+          },
+          DIFF_MENU: {
+            acceptReporters: true,
+            items: ["Easy", "Normal", "Expert", "Super Expert"]
           }
         }
       };
@@ -220,7 +281,7 @@
       if (!status === true) {
         return status
       }
-      switch ( DATA ) {
+      switch (DATA) {
         case "title":
           return leveldata.name;
         case "description":
@@ -275,7 +336,7 @@
       if (!userstatus === true) {
         return userstatus
       }
-      switch ( DATA ) {
+      switch (DATA) {
         case "region":
           return userdata.region_name;
         case "country":
@@ -349,39 +410,39 @@
     }
     getlevelimage({ LEVEL }) {
       console.log("Custom Extension Message: This code is provided by ShovelUtils, I do not own any of this but full credits to TheShovel")
-        Scratch.fetch(`https://tgrcode.com/mm2/level_thumbnail/${LEVEL}`)
-      .then((r) => r.arrayBuffer())
-      .then((arrayBuffer) => {
-        const store = vm.runtime.storage;
-        vm.addCostume(LEVEL + ".PNG", {
-          name: LEVEL + "",
-          asset: new store.Asset(
-            store.AssetType.ImageBitmap,
-            null,
-            store.DataFormat.PNG,
-            new Uint8Array(arrayBuffer),
-            true
-          )
+      Scratch.fetch(`https://tgrcode.com/mm2/level_thumbnail/${LEVEL}`)
+        .then((r) => r.arrayBuffer())
+        .then((arrayBuffer) => {
+          const store = vm.runtime.storage;
+          vm.addCostume(LEVEL + ".PNG", {
+            name: LEVEL + "",
+            asset: new store.Asset(
+              store.AssetType.ImageBitmap,
+              null,
+              store.DataFormat.PNG,
+              new Uint8Array(arrayBuffer),
+              true
+            )
+          })
         })
-      })
     }
     getmiiimage() {
       console.log(usermii)
       Scratch.fetch('https://corsproxy.io/?', usermii)
-      .then((r) => r.arrayBuffer())
-      .then((arrayBuffer) => {
-        const store = vm.runtime.storage;
-        vm.addCostume("miidata" + ".PNG", {
-          name: "miidata" + "",
-          asset: new store.Asset(
-            store.AssetType.ImageBitmap,
-            null,
-            store.DataFormat.PNG,
-            new Uint8Array(arrayBuffer),
-            true
-          )
+        .then((r) => r.arrayBuffer())
+        .then((arrayBuffer) => {
+          const store = vm.runtime.storage;
+          vm.addCostume("miidata" + ".PNG", {
+            name: "miidata" + "",
+            asset: new store.Asset(
+              store.AssetType.ImageBitmap,
+              null,
+              store.DataFormat.PNG,
+              new Uint8Array(arrayBuffer),
+              true
+            )
+          })
         })
-      })
     }
     clearcon() {
       return clearcon
@@ -437,6 +498,59 @@
     }
     uncleared() {
       return uncleared
+    }
+    experimental() {
+      var category = confirm("This category contains experimental blocks used in the next update.\nAre you sure you want to continue?")
+      if (category === true) {
+        experimental = true;
+        Scratch.vm.extensionManager.refreshBlocks();
+      } else {
+        // Nothing here
+      }
+    }
+    closeEx() {
+      var category = confirm("Are you sure you want to close the experimental blocks?\nAny usage will be deleted.")
+      if (category === true) {
+        experimental = false;
+        Scratch.vm.extensionManager.refreshBlocks();
+      } else {
+        // Nothing here
+      }
+    }
+    async superworlds() {
+      const response = await Scratch.fetch("https://tgrcode.com/mm2/get_super_worlds")
+      superworlddata = await response.json();
+      if (superworlddata.error) {
+        { superworldstatus = false }
+      } else {
+        { superworldstatus = true; }
+      }
+    }
+    getsuper() {
+      //
+    }
+    async endlesscourses({ DIFFS, NUMB }) {
+      var difficulty = null;
+      switch (DIFFS) {
+        case "Easy":
+          difficulty = "e";
+        case "Normal":
+          difficulty = "n";
+        case "Expert":
+          difficulty = "ex";
+        case "Super Expert":
+          difficulty = "sex";
+      }
+      if (NUMB < 1 || NUMB > 300) {
+        endlessstatus = false;
+      }
+      const response = await Scratch.fetch(`https://tgrcode.com/mm2/search_endless_mode?count=${NUMB}&difficulty=${difficulty}`)
+      endlessdata = await response.json();
+      if (endlessdata.error) {
+        endlessstatus = false
+      } else {
+        endlessstatus = true
+      }
     }
   }
   Scratch.vm.runtime.on('BEFORE_EXECUTE', () => {
