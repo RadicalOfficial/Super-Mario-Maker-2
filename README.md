@@ -139,7 +139,7 @@ clear condition - Speedrun's Clear Condition
 That's it for the Super Mario Maker 2 Extension Documentation. If you liked the Extension, please give it a star and follow me on [Scratch](https://scratch.mit.edu/users/Knightbot63)!
 
 # Next Updates...
-There will be updates, betas and more in the official [Scratch Forum](https://scratch.mit.edu/discuss/topic/This_Topic_Is_Coming_Soon_Once_The_Forums_Are_Back_Up)
+There will be updates, betas and more in the official [Scratch Forum](https://scratch.mit.edu/discuss/topic/735271/)
 
 ## Bugs, Improvements, Feedback?
 You can share your reports on this GitHub repository or the Scratch Forum linked above.
