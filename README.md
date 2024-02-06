@@ -1,5 +1,5 @@
 # Super Mario Maker 2
-A Scratch Extension getting Super Mario Maker 2 data. Unofficial.
+A Scratch Extension getting Super Mario Maker 2 Course World data. Unofficial.
 
 # Getting Started
 
@@ -12,8 +12,7 @@ You want to click on *TurboWarp* and click Custom Extension:
 ![image](https://github.com/RadicalOfficial/Super-Mario-Maker-2/assets/125277461/3819bad8-eba0-4e68-a0d7-5a660776e626)<br>
 Once clicked, go to the **Text** tab and paste the code. *NOTE: Make sure you click the "Run Extension without Sandbox" or else it won't work!*
 ![image](https://github.com/RadicalOfficial/Super-Mario-Maker-2/assets/125277461/be597ff2-3da7-45c4-8a82-99d22404aba6)<br>
-If you see this tab below in the left toolbar, it means that the extension worked!<br>
-![image](https://github.com/RadicalOfficial/Super-Mario-Maker-2/assets/125277461/9de3f066-2a10-4ba5-88be-25394125ae32)
+If you see the tab in the left toolbar, it means that the extension worked!<br>
 
 <br><br>Now let's move onto the blocks!<br>
 # Blocks
@@ -25,7 +24,7 @@ There are many blocks to play around with, but let's go over some things first!
 # Level Data Blocks
 The first block you'll most likely see is this block:<br>
 ![image](https://github.com/RadicalOfficial/Super-Mario-Maker-2/assets/125277461/8fb417b5-fcdf-421f-b8f3-96ad82029de4)<br>
-If you click on it, you'll get the data of the Level by it's Level ID. Check out [MakerCentral](https://makercentral.io) and put any code you want to see!
+If you click on it, you'll get the data of the Level by its Level ID. Check out [MakerCentral](https://makercentral.io) and put any code you want to see!
 ## Secondary Blocks
 Here are the list of booleans that will return true or false depending on the level ID<br>
 ![image](https://github.com/RadicalOfficial/Super-Mario-Maker-2/assets/125277461/776a1471-d8bf-4e52-8cab-33c9bd535257)
@@ -38,7 +37,7 @@ The block will always return false unless the Level has no World Record, making 
 ## Get Level Reporter
 ![image](https://github.com/RadicalOfficial/Super-Mario-Maker-2/assets/125277461/cfa6d6d4-7f07-4e09-b8e6-b1d3add2a3e7)
 <br>
-This reporter will return a value depending on the dropdown. Here's all the dropdowns and their descriptions:
+This reporter will return a value depending on the dropdown. Here are all the dropdowns and their descriptions:
 ```
 title - Get's the level title
 description - Get's the level description
@@ -59,6 +58,9 @@ clear condition - Get's the level's clear condition. If there is none, it will r
 > [!NOTE]
 > The Reporter will return false for everything when an Invalid Level ID is set.
 
+## When Level ... hat
+This hat block works similarly to the booleans but in a hat block. Note that this block is only supported in unsandboxed extensions
+
 # User Data Blocks
 The blocks act similar to the Level Data Blocks but they have more usage.
 Similar to the Level Data Blocks, to get the data, click on the block below:<br>
@@ -70,12 +72,12 @@ List of Blocks in the Category<br>
 ![image](https://github.com/RadicalOfficial/Super-Mario-Maker-2/assets/125277461/5b7f5ecd-f959-4196-8e84-75795891a952)<br>
 This block acts similarly to the Level Status Code block but for Maker IDs!
 ## Get User Reporter
-Similar to the Get Level reporter, it will return a value depending on the dropdown. Here's all the dropdowns and their descriptions:
+Similar to the Get Level reporter, it will return a value depending on the dropdown. Here are all the dropdowns and their descriptions:
 > [!IMPORTANT]
-> This list is very long. If you do not want to read it, please skip.
+> This list is very long. If you do not want to read it, please skip it.
 ```
-region - Get's the Maker's region
-country - Get's the Maker's country
+region - Get the Maker's region
+country - Get the Maker's country
 name - Get the Maker's name
 last active - Get the Maker's last online date
 mii image - Get the Maker's Mii Image
@@ -102,8 +104,8 @@ co-op clears - Get the Maker's Co-op Clears
 first clears - Get the Maker's amount they First Cleared on a stage
 world records - Get the Maker's amount they hold the World Record on a Stage.
 super world clears - Get the amount of Super World Clears the Maker has.
-uploaded levels - Get the amount of levels the Maker uploaded
-tags enabled - See if tags are able to be edited on their Stages
+uploaded levels - Get the number of levels the Maker uploaded
+tags enabled - See if tags can be edited on their Stages
 comments enabled - See if they have comments enabled
 employee - See if the Maker is a Nintendo Employee
 ```
@@ -125,9 +127,9 @@ This block acts similarly to the User and Level Status Block.<br>
 This block gets the Ninji Speedrun by Index. There are 22 Ninji Speedruns currently.<br>
 **Index Number 1 will give you the latest Ninji Speedrun.**
 <br>
-Here's all the dropdowns for the reporter:
+Here are all the dropdowns for the reporter:
 ```
-name - Get's the Speedrun Name
+name - Get the Speedrun Name
 description - Speedrun Description
 upload date - Speedrun's Upload Date
 game style - Speedrun's Game Style
@@ -135,11 +137,13 @@ theme - Speedrun's Theme
 end date - Speedrun's End Date
 clear condition - Speedrun's Clear Condition
 ```
+# Beta Blocks
+These are currently experimental blocks and may not be in the future update. Please do not use them in your projects as they might be hidden forever in the palette.
 # That's a wrap!
 That's it for the Super Mario Maker 2 Extension Documentation. If you liked the Extension, please give it a star and follow me on [Scratch](https://scratch.mit.edu/users/Knightbot63)!
 
 # Next Updates...
-There will be updates, betas and more in the official [Scratch Forum](https://scratch.mit.edu/discuss/topic/735271/)
+There will be updates, betas, and more in the official [Scratch Forum](https://scratch.mit.edu/discuss/topic/735271/)
 
 ## Bugs, Improvements, Feedback?
-You can share your reports on this GitHub repository or the Scratch Forum linked above.
+You can share your reports on this GitHub repository or the Scratch Forum.
