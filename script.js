@@ -1,6 +1,6 @@
 // Name: Super Mario Maker 2
 // ID: smm
-// Description: Custom Extension for Super Mario Maker 2 APIs.
+// Description: Extension for getting Super Mario Maker 2 Course World data.
 // By: RadicalOfficial <https://scratch.mit.edu/users/Knightbot63>
 
 (function(Scratch) {
@@ -22,14 +22,17 @@
 
   var experimental = false;
   if (!Scratch.extensions.unsandboxed) {
-    throw new Error('Sandbox Error: This must be unsandboxed. Thank you! - Radical');
+    throw new Error('This extension must run unsandboxed');
   }
+  const blocksIcon = "data:image/png;base64,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";
   class SMM {
     getInfo() {
       return {
         id: 'smm',
         name: 'Super Mario Maker 2',
-        color1: "#af0000",
+        color1: "#E7081E",
+        blockIconURI: blocksIcon,
+        docsURI: 'https://github.com/RadicalOfficial/Super-Mario-Maker-2/blob/main/README.md',
         blocks: [
           {
             blockType: "label",
@@ -71,6 +74,18 @@
                 type: Scratch.ArgumentType.STRING,
                 defaultValue: 'title',
                 menu: "DATA_MENU",
+              }
+            }
+          },
+          {
+            opcode: 'arguhatlevel',
+            blockType: Scratch.BlockType.HAT,
+            text: "when [CODE]",
+            isEdgeActivated: true,
+            arguments: {
+              CODE: {
+                type: Scratch.ArgumentType.STRING,
+                menu: "CODE"
               }
             }
           },
@@ -199,19 +214,6 @@
             }
           },
           {
-            opcode: 'arguhatlevel',
-            blockType: Scratch.BlockType.EVENT,
-            text: "when [CODE]",
-            isEdgeActivated: false,
-            hideFromPalette: !experimental,
-            arguments: {
-              CODE: {
-                type: Scratch.ArgumentType.STRING,
-                menu: "CODE"
-              }
-            }
-          },
-          {
             func: "experimental",
             blockType: Scratch.BlockType.BUTTON,
             text: "Beta Blocks",
@@ -239,14 +241,7 @@
           },
           CODE: {
             acceptReporters: false,
-            items: [
-              {
-                text: "Level has Clear Condition?",
-                value: " "
-              },
-              "Level Status Code is Successful?",
-              "Level is Uncleared?"
-            ]
+            items: ["Level is Uncleared", "Level has Clear Condition", "Level status code is successful"]
           },
           DIFF_MENU: {
             acceptReporters: true,
@@ -318,6 +313,17 @@
             return "No clear condition for this Level."
           }
           return leveldata.clear_condition_name;
+      }
+    }
+    arguhatlevel({ CODE }) {
+      // This block must be green flag clicked in order to refresh
+      switch (CODE) {
+        case "Level has Clear Condition":
+          return clearcon;
+        case "Level status code is successful":
+          return status;
+        case "Level is Uncleared":
+          return uncleared;
       }
     }
     async getuser(args) {
@@ -487,15 +493,6 @@
           }
       }
     }
-    arguhatlevel(args) {
-      if (args.CODE == "Level has Clear Condition?") {
-        return true === Scratch.Cast.toReporter(clearcon)
-      } else if (args.CODE == "Level Status Code is Successful?") {
-        return true === Scratch.Cast.toReporter(status)
-      } else {
-        return true === Scratch.Cast.toReporter(uncleared)
-      }
-    }
     uncleared() {
       return uncleared
     }
@@ -529,6 +526,7 @@
     getsuper() {
       //
     }
+    
     async endlesscourses({ DIFFS, NUMB }) {
       var difficulty = null;
       switch (DIFFS) {
@@ -553,9 +551,5 @@
       }
     }
   }
-  Scratch.vm.runtime.on('BEFORE_EXECUTE', () => {
-    // startHats is the same as before!
-    Scratch.vm.runtime.startHats('smm_arguhatlevel');
-  });
   Scratch.extensions.register(new SMM());
 })(Scratch);
